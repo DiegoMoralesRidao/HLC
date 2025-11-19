@@ -1,17 +1,28 @@
-FROM ubuntu 
-ARG USARIO
-ARG PASSWORD
-RUN apt-get update && apt-get install -yq --no-install-recommends \
-    sudo \
+FROM ubuntu
+RUN apt update && apt install -yq --no-install-recommends \ 
     nano \
-    git curl wget \
-    iputils-ping net-tools
+    git curl \
+    net-tools iputils-ping \
+    sudo \
+    openssh-server
 
 RUN mkdir -p /root/admin/base
 WORKDIR /root/admin/base
-COPY ./dockerfiles/base/admin/start.sh .
-RUN chmod +x ./start.sh
-#El primer comando que usa el contenedor para mantenerse vivo
-CMD [ "tail", "-f", "/dev/null" ]
+#Directorio fijado, con el que hago referencia a la hora de hacer las cosas, por eso uso el . (parecido al contexto)
+COPY ./dockerfiles/base/admin .
+COPY ./common/ /root/admin/common
 
-ENTRYPOINT [ "./start.sh" ]
+#Usado cuando hago un docker compose, por lo que hace referencia al contexto.
+#COPY ./admin/start.sh . (Usado para Docker Build, ya que aquí es la ruta relativa al directorio donde me encuentro, no al contexto.)
+RUN chmod +x ./start.sh
+
+ENTRYPOINT [ "./start.sh"]
+#!/bin/bash
+configurar-ssh() {
+    sed -i 's/#Port 22/Port '$PORT_SSH'/' /etc/ssh/sshd_config
+    sed -i 's/#PermitRootLogin./PermitRootLogin no/' /etc/ssh/sshd_config
+    service ssh restart
+    mkdir /home/$USUARIO/.ssh
+    cp /root/admin/common/ /home/$USUARIO/.ssh/
+    #exec /usr/sbin/sshd -D &
+}
