@@ -14,6 +14,7 @@ COPY ./common/ /root/admin/common
 
 #Usado cuando hago un docker compose, por lo que hace referencia al contexto.
 #COPY ./admin/start.sh . (Usado para Docker Build, ya que aquí es la ruta relativa al directorio donde me encuentro, no al contexto.)
+
 RUN chmod +x ./start.sh
 
 ENTRYPOINT [ "./start.sh"]

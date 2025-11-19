@@ -6,5 +6,16 @@ services:
         - USUARIO=maria
       dockerfile: ./deploy/Dockerfile
     container_name: ctportfolio
-    ports:
-      - "8810:80"
+    env_file:
+      - ./.env
+    volumes:
+      - ./logs:/root/logs
+    networks:
+      - netcaronte:
+        ipv4_address: $(IP)
+networks:
+  netcaronte:
+    ipam:
+      driver: default
+      config:
+        - subnet: $(SUBNET) 
