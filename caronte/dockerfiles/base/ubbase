@@ -1,0 +1,17 @@
+FROM ubuntu 
+ARG USARIO
+ARG PASSWORD
+RUN apt-get update && apt-get install -yq --no-install-recommends \
+    sudo \
+    nano \
+    git curl wget \
+    iputils-ping net-tools
+
+RUN mkdir -p /root/admin/base
+WORKDIR /root/admin/base
+COPY ./dockerfiles/base/admin/start.sh .
+RUN chmod +x ./start.sh
+#El primer comando que usa el contenedor para mantenerse vivo
+CMD [ "tail", "-f", "/dev/null" ]
+
+ENTRYPOINT [ "./start.sh" ]
