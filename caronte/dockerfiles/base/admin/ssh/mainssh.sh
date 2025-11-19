@@ -7,7 +7,7 @@ configurar_ssh() {
     if [ ! d /home/$USUARIO/.ssh ]; then
     mkdir -p /home/$USUARIO/.ssh
     cat /root/datos/id_rsa.pub >> /home/$USUARIO/.ssh/authorized_keys
-  fi
+   fi
 
     service ssh restart
 }
