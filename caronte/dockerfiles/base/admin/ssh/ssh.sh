@@ -1,3 +1,4 @@
+#!/bin/bash
 config_ssh() {
   # 1. Deshabilitar el login de root
   sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -12,6 +13,7 @@ config_ssh() {
     mkdir /home/${USUARIO}/.ssh
     cat /root/admin/base/common/id_rsa.pub >> /home/${USUARIO}/.ssh/authorized_keys
   fi
+  exec /usr/sbin/sshd 
 }
 
 config_sudoers() {
