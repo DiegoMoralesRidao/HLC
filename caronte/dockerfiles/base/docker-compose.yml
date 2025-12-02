@@ -5,6 +5,7 @@ services:
       args: #variables en dockerfile para la construcción de la
         - USUARIO=maria
       dockerfile: ./deploy/Dockerfile
+    image: diegomorales/ubbase
     container_name: ctportfolio
     env_file:
       - ./.env

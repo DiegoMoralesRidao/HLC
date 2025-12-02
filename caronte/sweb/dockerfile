@@ -1,0 +1,5 @@
+FROM ($Autor)
+
+COPY ./proyectos/${}/deploy/.env .env
+
+CMD ["nginx", "damemon off;"]
