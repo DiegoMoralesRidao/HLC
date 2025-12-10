@@ -1,0 +1,22 @@
+services:
+  web:
+    build: 
+      context: .. #portfolio
+      args: #variables en dockerfile para la construcción de la
+        - USUARIO=diego
+      dockerfile: ./deploy/Dockerfile
+    image: diegomorales/ubbase
+    container_name: ctportfolio
+    env_file:
+      - ./.env
+    volumes:
+      - ./logs:/root/logs
+    networks:
+      - netcaronte:
+        ipv4_address: $(IP)
+networks:
+  netcaronte:
+    ipam:
+      driver: default
+      config:
+        - subnet: $(SUBNET) 
