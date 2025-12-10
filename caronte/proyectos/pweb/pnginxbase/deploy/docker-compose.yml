@@ -1,0 +1,24 @@
+services:
+  web:
+    build: 
+      context: .. #portfolio
+      args:
+        - USUARIO=maria
+      dockerfile: ./deploy/Dockerfile
+    image: diegomorales/ubbase
+    container_name: ctportfolio
+    env_file:
+      - ./.env
+    volumes:
+      - ./logs:/root/logs
+    networks:
+      - netcaronte:
+        ipv4_address: $(IP)
+    ports:
+      -"${PORT_Web}:80"
+networks:
+  netcaronte:
+    ipam:
+      driver: default
+      config:
+        - subnet: $(SUBNET) 

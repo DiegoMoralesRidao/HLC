@@ -1,0 +1,23 @@
+#partimos de una imagen ubuntu 
+FROM ubuntu
+ARG USUARIO
+RUN apt update && insall -yq --no-install-recommends\
+    apache2 \
+    libapache2-mod-php7.2 \
+    nano \
+    curl \
+    net-tools iputils-ping 
+#***Creación de ususuarios***
+#Comandos interactivos (piden datos por terminal)
+#Comandos por lotes (datos los ponemos como parametros del comando)
+RUN useradd -rm -d /home/${USUARIO} -s /bin/bash ${USUARIO} 
+RUN echo "${USUARIO}:1234" | chapasswd
+RUN echo "bienvenido a la empresa" > /home/${USUARIO}/bienvenida.txt
+#debemos consultar el docker hub (imagen) para ver variables de entorno 
+#directorios de trabajo etc etc 
+#directorio de trabajo dentro del contenedor
+WORKDIR /var/www/html
+#el directorio . es relativo al contexto del Docker Compose
+COPY ./src .
+EXPOSE 80
+CMD apache2ctl,-DFOREGROUND
