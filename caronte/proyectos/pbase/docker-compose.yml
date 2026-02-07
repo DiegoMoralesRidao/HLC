@@ -5,8 +5,8 @@ services:
       args: #variables en dockerfile para la construcción de la
         - USUARIO=diego
       dockerfile: ./deploy/Dockerfile
-    image: diegomorales/ubbase
-    container_name: ctportfolio
+    image: dmorrid/ubbase
+    container_name: proyecto_react
     env_file:
       - ./.env
     volumes:

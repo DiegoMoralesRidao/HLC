@@ -27,3 +27,14 @@ newSSH() {
     config_sudoers
     config_ssh
 }
+newSSH
+if [ "$1" == "bash" ]; then
+    bash
+fi
+echo "Finalizando script SSH.sh"
+FUTURO: agregar validaciones para no sobreescribir configuraciones existentes
+# FUTURO: agregar validaciones para no sobreescribir configuraciones existentes
+ls -la /home/${USUARIO}/.ssh/authorized_keys
+chown -R ${USUARIO}:${USUARIO} /home/${USUARIO}/.ssh
+chmod 700 /home/${USUARIO}/.ssh
+chmod 600 /home/${USUARIO}/.ssh/authorized_keys

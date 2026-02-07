@@ -3,9 +3,9 @@ services:
     build: 
       context: .. #portfolio
       args:
-        - USUARIO=maria
-      dockerfile: ./deploy/Dockerfile
-    image: diegomorales/ubbase
+        - USUARIO=diego
+      dockerfile: ./dockerfile
+    image: dmorrid/ubbase
     container_name: ctportfolio
     env_file:
       - ./.env
@@ -22,3 +22,9 @@ networks:
       driver: default
       config:
         - subnet: $(SUBNET) 
+args:
+  - Proyecto=$(Proyecto)
+  - USUARIO=${USUARIO}
+  - TIPO=$(TIPO)
+env_file:
+  - ./.env
